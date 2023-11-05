@@ -41,11 +41,8 @@ class SAQ extends Modele
 	{
 		$s = curl_init();
 		$url = "https://www.saq.com/fr/produits/vin/vin-rouge?p=" . $page . "&product_list_limit=" . $nombre . "&product_list_order=name_asc";
-
-		var_dump($url);
-
+		//var_dump($url);
 		// TODO: fh: considérer ce url qui récupere tout les types
-// TODO: fh: considérer un pagesize de 96 qui semble fonctionner
 		//curl_setopt($s, CURLOPT_URL, "http://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?searchType=&orderBy=&categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=".$debut."&tri=&metaData=YWRpX2YxOjA8TVRAU1A%2BYWRpX2Y5OjE%3D&pageSize=". $nombre ."&catalogId=50000&searchTerm=*&sensTri=&pageView=&facet=&categoryId=39919&storeId=20002");
 		//curl_setopt($s, CURLOPT_URL, "https://www.saq.com/webapp/wcs/stores/servlet/SearchDisplay?categoryIdentifier=06&showOnly=product&langId=-2&beginIndex=" . $debut . "&pageSize=" . $nombre . "&catalogId=50000&searchTerm=*&categoryId=39919&storeId=20002");
 		//curl_setopt($s, CURLOPT_URL, $url);
@@ -86,7 +83,6 @@ class SAQ extends Modele
 			//var_dump($noeud -> getAttribute('class')) ;
 			//if ("resultats_product" == str$noeud -> getAttribute('class')) {
 			if (strpos($noeud->getAttribute('class'), "product-item") !== false) {
-
 				//echo $this->get_inner_html($noeud);
 				$info = self::recupereInfo($noeud);
 				echo "<p>" . $info->nom;
@@ -103,7 +99,6 @@ class SAQ extends Modele
 				echo "</p>";
 			}
 		}
-
 		return $i;
 	}
 
@@ -125,16 +120,10 @@ class SAQ extends Modele
 	{
 
 		$info = new stdClass();
-
-
-
-
 		$info->img = $noeud->getElementsByTagName("img")->item(0)->getAttribute('src'); //TODO : Nettoyer le lien
 
 		$a_titre = $noeud->getElementsByTagName("a")->item(0);
 		$info->url = $a_titre->getAttribute('href');
-
-
 		//		fh: update sur le code de Jonathan(récupérant a l'occasion l'image de la pastille plutot que l'image de la bouteille)
 		$xpath = new DOMXPath($noeud->ownerDocument);
 		$bottleImageQuery = "//a[contains(@class, 'product-item-photo')]/span/span/img";
@@ -144,10 +133,7 @@ class SAQ extends Modele
 		} else {
 			$info->img = "Image de la bouteille non disponible";
 		}
-
 		var_dump('image:' . $info->img);
-
-
 		//lien_fournisseur
 		$query = ".//a[contains(@class, 'product-item-link')]";
 		$productLinks = $xpath->query($query, $noeud);
@@ -171,7 +157,6 @@ class SAQ extends Modele
 				$info->desc->texte = self::nettoyerEspace($info->desc->texte);
 				$aDesc = explode("|", $info->desc->texte); // Type, Format, Pays
 				if (count($aDesc) == 3) {
-
 					$info->desc->type = trim($aDesc[0]);
 					$info->desc->format = trim($aDesc[1]);
 					$info->desc->pays = trim($aDesc[2]);
@@ -180,7 +165,6 @@ class SAQ extends Modele
 				$info->desc->texte = trim($info->desc->texte);
 			}
 		}
-
 
 		//pastille
 		$pastilleInfo = null;
@@ -214,9 +198,6 @@ class SAQ extends Modele
 					$info->desc->code_SAQ = trim($aRes[0]);
 					$info->code = trim($aRes[0]);
 				}
-
-
-
 			}
 		}
 
@@ -315,6 +296,5 @@ class SAQ extends Modele
 			return null;
 		}
 	}
-
 }
 ?>
