@@ -32,6 +32,8 @@ class SAQ extends Modele
 
 	public function getProduits($nombre = 24, $page = 1)
 	{
+
+		// TODO: fh: consédérer aussi vin-rose(278+) et vin-blanc(3172+)
 		$url = "https://www.saq.com/fr/produits/vin/vin-rouge?p=" . $page . "&product_list_limit=" . $nombre . "&product_list_order=name_asc";
 
 		$ch = curl_init();
