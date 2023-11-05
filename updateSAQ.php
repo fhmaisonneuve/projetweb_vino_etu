@@ -12,7 +12,7 @@
 	$page = 1;
 	$nombreProduit = 96; //48 ou 96	
 	$maxpage = 57;
-	//$maxpage = 1;
+	$maxpage = 1;
 	
 	$saq = new SAQ();
 	for ($i = 0; $i < $maxpage; $i++) //permet d'importer séquentiellement plusieurs pages.

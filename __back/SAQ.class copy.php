@@ -26,7 +26,7 @@ class SAQ extends Modele
 		parent::__construct();
 		if (
 			!($this->stmt = $this->_db->prepare("INSERT INTO bouteille(nom, type, image, code_saq, pays, description, prix_saq,
-		 url_saq, format, pastille_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))
+		 url_saq, format, lien_fournisseur, pastille_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))
 		) {
 			echo "Echec de la préparation : (" . $mysqli->errno . ") " . $mysqli->error;
 		}
@@ -233,7 +233,7 @@ class SAQ extends Modele
 			if ($rows->num_rows < 1) {
 				var_dump($pastille_id);
 				$this->stmt->bind_param(
-					"sissssissi",
+					"sissssisssi",
 					$bte->nom,
 					$type,
 					$bte->img,
@@ -243,6 +243,7 @@ class SAQ extends Modele
 					$bte->prix,
 					$bte->url,
 					$bte->desc->format,
+					$bte->lien_fournisseur,
 					$pastille_id
 
 				);
